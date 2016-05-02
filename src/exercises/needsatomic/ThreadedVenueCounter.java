@@ -1,5 +1,7 @@
 package exercises.needsatomic;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * ThreadedVenueCounter - a simple class for keeping track of all the people in
  * a venue
@@ -69,20 +71,20 @@ public class ThreadedVenueCounter {
 	/**
 	 * The current number of people in the venue
 	 */
-	private int total;
+	private AtomicInteger total = new AtomicInteger();
 
 	/**
 	 * Admits a person to the venue, incrementing the total
 	 */
 	public void admit() {
-		total = total + 1;
+		total.incrementAndGet();
 	}
 
 	/**
 	 * Called when someone leaves the venue, decrementing the total
 	 */
 	public void exit() {
-		total--;
+		total.decrementAndGet();
 	}
 
 	/**
@@ -91,7 +93,7 @@ public class ThreadedVenueCounter {
 	 * @return the number of people
 	 */
 	public int getTotal() {
-		return total;
+		return total.intValue();
 	}
 
 }
